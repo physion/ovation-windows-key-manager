@@ -16,20 +16,20 @@ namespace KeyManager
         public KeyManagerWindowsService()
         {
             InitializeComponent();
-            _app = new KeyRepositoryApp(_eventSource);
+            var log = new EventLog(_eventLog);
+            _app = new KeyRepositoryApp(log);
         }
 
-        private const string _eventSource = "OvationKeyManager";
+        private const string _eventLog = "OvationKeyManager";
 
         protected override void OnStart(string[] args)
         {
-            EventLog.WriteEntry(_eventSource, "Starting service");
             _app.Start();
         }
 
         protected override void OnStop()
         {
-            _app.Stop();
+           _app.Stop();
         }
     }
 }
